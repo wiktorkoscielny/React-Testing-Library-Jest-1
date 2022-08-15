@@ -15,10 +15,15 @@ const Calculator = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const url = "https://api.nbp.pl/api/exchangerates/tables/A?format=json";
+            try {
+                const url = "https://api.nbp.pl/api/exchangerates/tables/A?format=json";
             const response = await fetch(url);
             const json = await response.json();
             setCurrencies(json[0].rates);
+            } catch(err) {
+                console.error(err);
+               setError('Cannot connect to NBP...');
+            }
         };
         fetchData();
     }, []);
